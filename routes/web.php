@@ -1,12 +1,27 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InsumoController;
+use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\EmpleadoController;
 
-Route::get('/', fn () => redirect()->route('dashboard'));
+// Rutas Públicas de Autenticación
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard',   fn () => view('dashboard'))->name('dashboard');
-Route::get('/insumos',     fn () => view('insumos.index'))->name('insumos.index');
-Route::get('/proveedores', fn () => view('proveedores.index'))->name('proveedores.index');
-Route::get('/empleados',   fn () => view('empleados.index'))->name('empleados.index');
+// Redirección principal
+Route::get('/', function () {
+    return redirect()->route('dashboard');
+});
 
-Route::post('/logout', fn () => redirect()->route('dashboard'))->name('logout');
+// Rutas del Sistema Agrovalle (Protegidas con Auth)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    Route::resource('insumos', InsumoController::class);
+    Route::resource('proveedores', ProveedorController::class);
+    Route::resource('empleados', EmpleadoController::class);
+});
