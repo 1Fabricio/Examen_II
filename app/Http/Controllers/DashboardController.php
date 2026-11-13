@@ -2,12 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Empleado;
+use App\Models\Insumo;
+use App\Models\Proveedor;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
+        $totalInsumos = Insumo::count();
+        $proveedoresActivos = Proveedor::where('estado', 'Activo')->count();
+        $totalEmpleados = Empleado::count();
+        $valorInventario = Insumo::sum(DB::raw('inventario * precio')) ?? 0;
+
+        return view('dashboard', compact(
+            'totalInsumos',
+            'proveedoresActivos',
+            'totalEmpleados',
+            'valorInventario'
+        ));
     }
 }
