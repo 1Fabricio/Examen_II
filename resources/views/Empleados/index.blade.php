@@ -14,13 +14,6 @@
         </a>
     </div>
 
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    @endif
-
     <div class="card shadow-sm mb-4 border-0">
         <div class="card-header bg-dark text-white py-3">
             <h6 class="m-0 font-weight-bold"><i class="fas fa-id-card me-2"></i>Personal Activo en Sucursal</h6>
@@ -41,13 +34,22 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $coloresCargo = [
+                                'Ingeniero Agrónomo' => 'bg-success',
+                                'Asesor Técnico de Campo' => 'bg-info text-dark',
+                                'Jefe de Bodega Central' => 'bg-primary',
+                                'Operador de Maquinaria' => 'bg-warning text-dark',
+                                'Cajero' => 'bg-secondary',
+                            ];
+                        @endphp
                         @forelse ($empleados as $empleado)
                         <tr>
                             <td class="text-center text-muted fw-bold">{{ $empleado->id }}</td>
                             <td><code>{{ $empleado->identidad }}</code></td>
                             <td class="fw-bold text-dark">{{ $empleado->nombre }} {{ $empleado->apellido }}</td>
                             <td>{{ $empleado->correo }}</td>
-                            <td><span class="badge bg-success">{{ $empleado->cargo }}</span></td>
+                            <td><span class="badge {{ $coloresCargo[$empleado->cargo] ?? 'bg-dark' }}">{{ $empleado->cargo }}</span></td>
                             <td class="text-end fw-bold text-success">L. {{ number_format($empleado->salario, 2) }}</td>
                             <td class="text-center">{{ date('d/m/Y', strtotime($empleado->fecha_ingreso)) }}</td>
                             <td class="text-center">
