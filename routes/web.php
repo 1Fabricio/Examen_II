@@ -11,13 +11,11 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
-// Rutas públicas (solo invitados)
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 });
 
-// Rutas protegidas (solo usuarios autenticados)
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

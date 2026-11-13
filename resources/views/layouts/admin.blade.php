@@ -73,6 +73,32 @@
             border-radius: 12px;
         }
 
+        main h1.h3 {
+            color: var(--agro-navy);
+            font-weight: 700;
+            border-left: 5px solid var(--agro-leaf);
+            padding-left: 12px;
+        }
+
+        .table thead.table-light {
+            --bs-table-bg: var(--agro-green);
+            --bs-table-color: #ffffff;
+            --bs-table-border-color: var(--agro-dark);
+        }
+
+        .table-hover {
+            --bs-table-hover-bg: rgba(76, 175, 80, 0.1);
+        }
+
+        .btn {
+            border-radius: 8px;
+        }
+
+        .badge {
+            border-radius: 50rem;
+            padding: 0.45em 0.8em;
+        }
+
         .agro-footer {
             background-color: #ffffff;
             border-top: 1px solid #e3e6f0;

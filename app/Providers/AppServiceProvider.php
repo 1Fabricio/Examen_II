@@ -19,7 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Mensajes de validación en español (lang/es) sin modificar el .env
         app()->setLocale('es');
     }
 }
